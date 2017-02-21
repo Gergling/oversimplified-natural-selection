@@ -1,4 +1,4 @@
-angular.module('environment').service('environmentService', function () {
+angular.module('environment').service('environmentService', function (attributeService) {
   var data = {
     environments: []
   }
@@ -9,10 +9,8 @@ angular.module('environment').service('environmentService', function () {
   }
   
   function meanAttributes(environments) {
-    var sum = attributeFactory();
-    environments.forEach(function (environment) {
-      sum.add(environment.attributes());
-    });
-    return sum.divide(environments.length);
+    return attributeService.mean(environments.map(function (environment) {
+      return environment.attributes();
+    }));
   }
 });
