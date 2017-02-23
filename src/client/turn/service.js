@@ -1,11 +1,3 @@
-/*
-The difference between an environment's attribute and the organism is called the deviation.
-Each turn, an organism with an empty adjacent space may create a child in an empty adjacent space. The probability of this is the sum of (255 - deviation) / 255 for each attribute over 3.
-Each turn, an organism may die. The probability of this is the sum of the deviation / 255 for each attribute over 3.
-The simulation ends when no organisms exist.
-Each procreation/death roll should be logged.
-*/
-
 angular.module('turn').service(function (organismService) {
   function forEachOrganism(fnc) {
     organismService.all().forEach(fnc);
@@ -36,4 +28,6 @@ angular.module('turn').service(function (organismService) {
     procreate();
     die();
   }
+  
+  this.next = next;
 });
