@@ -1,38 +1,36 @@
-angular.module('attribute').factory('attributeFactory', function () {
-  function Attribute() {
-    var data = {
+class Attribute {
+  constructor() {
+    this.data = {
       red: 0,
       green: 0,
       blue: 0
     };
-    
-    function mean(attributes) {
-      var sum = instantiate();
-      attributes.forEach(function (attribute) {
-        sum.add(attribute);
-      });
-      return sum.divide(attributes.length);
-    }
-    
-    function forEachData(fnc) {
-      Object.keys(data).forEach(fnc);
-    }
-    
-    function add(attribute) {
-      forEachData(function (prop) {
-        data[prop] += attribute[prop]();
-      });
-      return this;
-    }
-    
-    function divide(number) {
-      forEachData(function (prop) {
-        data[prop] /= number;
-      });
-      return this;
-    }
   }
-  function instantiate() {
+  mean(attributes) {
+    var sum = instantiate();
+    attributes.forEach(function (attribute) {
+      sum.add(attribute);
+    });
+    return sum.divide(attributes.length);
   }
-  return instantiate;
-});
+
+  forEachData(fnc) {
+    Object.keys(this.data).forEach(fnc);
+  }
+
+  add(attribute) {
+    forEachData(function (prop) {
+      this.data[prop] += attribute[prop]();
+    });
+    return this;
+  }
+
+  divide(number) {
+    forEachData(function (prop) {
+      this.data[prop] /= number;
+    });
+    return this;
+  }
+}
+
+return () => new Attribute();
