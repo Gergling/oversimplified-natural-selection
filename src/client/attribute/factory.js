@@ -6,13 +6,6 @@ class Attribute {
       blue: 0
     };
   }
-  mean(attributes) {
-    var sum = instantiate();
-    attributes.forEach(function (attribute) {
-      sum.add(attribute);
-    });
-    return sum.divide(attributes.length);
-  }
 
   forEachData(fnc) {
     Object.keys(this.data).forEach(fnc);
@@ -20,7 +13,7 @@ class Attribute {
 
   add(attribute) {
     forEachData(function (prop) {
-      this.data[prop] += attribute[prop]();
+      this.data[prop] += attribute.data[prop]();
     });
     return this;
   }
