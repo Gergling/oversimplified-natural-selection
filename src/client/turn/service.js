@@ -13,25 +13,28 @@ function forEachOrganism(fnc) {
   organismService.all().forEach(fnc);
 }
 
-// 
-function procreate(random) {
+// Procreates each organism into an adjacent environment if they're lucky.
+function procreate(getAdjacency, getSterility) {
   function adjacent(organism) {
     const environments = environmentService.adjacents(organism.location());
-    return environments[Math.floor(random * environments.length)];
+    return environments[Math.floor(getRandomAdjacency() * environments.length)];
   }
-  forEachOrganism(function (organism) {
-    const environment = adjacent(Math.random());
-    const probability = 1 - organism.deviation();
-    if (Math.random() < probability) {
+  forEachOrganism((organism) => {
+    // Get the randomly-generated adjacent environment.
+    const environment = adjacent(organism);
+    
+    // The 'comfort' is defined as the negative of the deviation from the environment.
+    const comfort = 1 - organism.deviation();
+    if (getSterility() < comfort) {
       organism.procreate(environment);
     }
   });
 }
 
-// Kills off all unlucky organisms.
-function die() {
+// Kills off all unlucky organisms dependent on.
+function die(survivalRandom) {
   forEachOrganism((organism) => {
-    if (Math.random() > organism.deviation()) {
+    if (survivalRandom < organism.deviation()) {
       organism.die();
     }
   });
@@ -57,5 +60,7 @@ function start() {
 module.exports = {
   start, // Run this function to start/continue the simulation.
   config, // Adjust the parameters of the simulation with the config object.
-  status // Regard the status of the simulation with the status object.
+  status, // Regard the status of the simulation with the status object.
+  procreate,
+  die,
 };
