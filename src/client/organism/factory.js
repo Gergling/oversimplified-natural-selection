@@ -1,10 +1,14 @@
-angular.module('organism').factory('organismFactory', function () {
-  function Organism() {
-    function deviation() {
-      return attributeService.mean([environment().attribute(), attribute()]).divide(255);
-    }
+import attributeService from '../attribute/service'
+import attributeFactory from '../attribute/factory'
+
+class Organism {
+  constructor(environment) {
+    this.attribute = attributeFactory();
+    this.environment = environment;
   }
-  function instantiate() {
+  deviation() {
+    return attributeService.mean([this.environment.attribute, this.attribute]).divide(255);
   }
-  return instantiate;
-});
+}
+
+module.exports = () => new Organism();
