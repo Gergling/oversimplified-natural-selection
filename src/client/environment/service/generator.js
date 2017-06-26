@@ -37,5 +37,5 @@ class Painter {
 }
 
 module.exports = {
-  mapPainter: (width, height, map) => new Painter()
+  createPainter: (width, height, map) => new Painter(width, height, map)
 };
