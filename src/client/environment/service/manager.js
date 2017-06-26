@@ -1,5 +1,9 @@
+import generator from './generator'
+
 var data = {
-  environments: []
+  environments: [],
+  width: 10,
+  height: 10
 }
 
 // Returns an array of 
@@ -25,5 +29,6 @@ function meanAttributes(environments) {
 
 module.exports = {
   data,
-  adjacents
+  adjacents,
+  mapPainter: () => generator.mapPainter(data.width, data.height, data.environments)
 };
